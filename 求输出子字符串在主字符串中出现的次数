@@ -1,0 +1,38 @@
+/*此题要求输出子字符串在主字符串中出现的次数*/
+
+#include<stdio.h>
+#include<string.h>
+int find_string(char str[],char substr[]);    //声明寻找函数
+int main()
+{
+    char ch1[]="edg";   //声明子字符串
+    char ch2[]="wocedgnbnbnbedgnb";   //声明主字符串
+    int num=find_string(ch2,ch1);   //向函数传递参数
+    printf("%d",num);     //打印函数返回值，即子字符串在主字符串出现的次数
+    return 0;
+}
+int find_string(char str[],char substr[])   //创建一个寻找函数
+{
+    int count=0;    //count用于计数
+    int i,j,check;    //i,j仅用于简单的循环
+    int len=strlen(str);
+    int sublen=strlen(substr);
+    for(i=0;i<len;i++)    //外部循环保证了子字符串能与主字符串每一个元素进行对比
+    {
+        check=1；    //变量check则用于判断是否找到所要求的字符
+        for(j=0;j<sublen&&j+i<len;j++)    //内部循环则保证了每一个子字符的元素能与主字符串对比
+        {
+            if(substr[j]!=str[i+j])   //如果子字符串与主字符串中相同位置的元素不同则为check赋值0；也就是没找到想要的元素时
+            {
+                check=0;
+                break;    //跳出判断语句
+            }
+        }
+        if(check==1)    //此时如果check仍为1则说明此趟循环在主字符串中找到了子字符串
+        {
+            count++;    //计数自增1    
+            i+=sublen;    //保证内循环每次都从下一个sublen长度处开始
+        }
+    }
+    return count;   //返回计数值
+}
